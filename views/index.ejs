@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Cetak Kartu Garansi</title>
+    <!-- Bootstrap core CSS -->
+    <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Font Awesome icons (free version)-->
+    <script src="../fontawesome/js/all.js" crossorigin="anonymous"></script>
+    <!-- DataTables -->
+    <link
+      href="../DataTables/DataTables-1.12.1/css/dataTables.bootstrap4.min.css"
+      rel="stylesheet"
+    />
+
+    <style>
+      .table.table-ellipsis tbody td {
+        max-width: 100px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-size: 12px;
+      }
+      .table.table-ellipsis tbody td button, .table.table-ellipsis tbody td a {
+        font-size: 12px;
+      }
+      input::-webkit-outer-spin-button,
+      input::-webkit-inner-spin-button {
+              -webkit-appearance: none;
+              margin: 0;
+      }
+ 
+      input[type=number] {
+          -moz-appearance: textfield;
+      }
+    </style>
+  </head>
+  <body style="background-color: #f4f6f9">
+    <div class="container">
+      <h2 class="text-center">Cetak Kartu Garansi</h2>
+      <% if(status === "offline"){ %>
+        <div class="alert alert-danger py-1">
+          <i class="fas fa-circle fa-xs text-danger"></i> 
+          You're offline, When you come online, we'll sync your changes
+        </div>
+
+        <% } %>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="card">
+            <div class="card-body">
+              <form action="/store" method="post">
+                <div class="form-group mb-3">
+                  <label for="">Nama</label>
+                  <input
+                    type="text"
+                    name="nama"
+                    id="nama"
+                    class="form-control"
+                    placeholder="Nama"
+                    required
+                    autofocus
+                  />
+                </div>
+                <div class="form-group mb-3">
+                  <label for="">Frame</label>
+                  <input
+                    type="text"
+                    name="frame"
+                    id="frame"
+                    class="form-control"
+                    placeholder="Frame"
+                    required
+                  />
+                </div>
+                <div class="form-group mb-3">
+                  <label for="">Lensa</label>
+                  <input
+                    type="text"
+                    name="lensa"
+                    id="lensa"
+                    class="form-control"
+                    placeholder="Lensa"
+                    required
+                  />
+                </div>
+                <div class="form-inline row">
+                  <label for="" class="col-1"><b>R</b></label>
+                  <div class="form-group col p-0">
+                    <input
+                      type="number"
+                      class="form-control"
+                      name="rsph"
+                      id="rsph"
+                      placeholder="Sph"
+                    />
+                  </div>
+                  <div class="form-group col p-0">
+                    <input
+                      type="number"
+                      class="form-control"
+                      name="rcyl"
+                      id="rcyl"
+                      placeholder="Cyl"
+                    />
+                  </div>
+                  <div class="form-group col p-0">
+                    <input
+                      type="number"
+                      class="form-control"
+                      name="raxis"
+                      id="raxis"
+                      placeholder="Axis"
+                    />
+                  </div>
+                  <div class="form-group col p-0">
+                    <input
+                      type="number"
+                      class="form-control"
+                      name="radd"
+                      id="radd"
+                      placeholder="Add"
+                    />
+                  </div>
+                  <div class="form-group col p-0">
+                    <input
+                      type="number"
+                      class="form-control"
+                      name="rmpd"
+                      id="rmpd"
+                      placeholder="Mpd"
+                    />
+                  </div>
+                </div>
+                <div class="form-inline row mb-3">
+                  <label for="" class="col-1"><b>L</b></label>
+                  <div class="form-group col p-0">
+                    <input
+                      type="number"
+                      class="form-control"
+                      name="lsph"
+                      id="lsph"
+                      placeholder="Sph"
+                    />
+                  </div>
+                  <div class="form-group col p-0">
+                    <input
+                      type="number"
+                      class="form-control"
+                      name="lcyl"
+                      id="lcyl"
+                      placeholder="Cyl"
+                    />
+                  </div>
+                  <div class="form-group col p-0">
+                    <input
+                      type="number"
+                      class="form-control"
+                      name="laxis"
+                      id="laxis"
+                      placeholder="Axis"
+                    />
+                  </div>
+                  <div class="form-group col p-0">
+                    <input
+                      type="number"
+                      class="form-control"
+                      name="ladd"
+                      id="ladd"
+                      placeholder="Add"
+                    />
+                  </div>
+                  <div class="form-group col p-0">
+                    <input
+                      type="number"
+                      class="form-control"
+                      name="lmpd"
+                      id="lmpd"
+                      placeholder="Mpd"
+                    />
+                  </div>
+                </div>
+
+                <div class="form-group mb-3">
+                  <label for="">Garansi Lensa</label>
+                  <select
+                    class="form-control"
+                    name="garansi_lensa"
+                    id="garansi_lensa"
+                    required
+                  >
+                    <option value="-">-- Tanpa Garansi --</option>
+                    <option value="6 Bulan">6 Bulan</option>
+                    <option value="1 Tahun">1 Tahun</option>
+                    <option value="2 Tahun">2 Tahun</option>
+                    <option value="3 Tahun">3 Tahun</option>
+                  </select>
+                </div>
+
+                <div class="form-group mb-3">
+                  <label for="">Garansi Frame</label>
+                  <select
+                    class="form-control"
+                    name="garansi_frame"
+                    id="garansi_frame"
+                    required
+                  >
+                    <option value="-">-- Tanpa Garansi --</option>
+                    <option value="6 Bulan">6 Bulan</option>
+                    <option value="1 Tahun">1 Tahun</option>
+                    <option value="2 Tahun">2 Tahun</option>
+                    <option value="3 Tahun">3 Tahun</option>
+                  </select>
+                </div>
+
+                <button class="btn btn-primary w-100">Simpan</button>
+                <button type="reset" class="btn btn-light w-100">Reset</button>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-8">
+          <div class="card">
+            <div class="card-body">
+              <table
+                id="example"
+                class="table table-hover table-bordered table-ellipsis
+                style="width: 100%"
+              >
+                <thead>
+                  <tr>
+                    <th>Tanggal</th>
+                    <th>Nama</th>
+                    <th>Frame</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% if(datas !== ""){ %>
+
+                  <% datas.forEach(function(data) { %>
+                  <tr>
+                    <td width="10%">
+                      <%= moment.utc(data.tanggal).format('MM/DD/YYYY') %>
+                    </td>
+                    <td class="text-uppercase"><%= data.nama %></td>
+                    <td class="text-uppercase" width="10%"><%= data.frame %></td>
+                    <td>
+                      <a href="<%= '/print/'+data.id %>" class="btn btn-primary btn-sm py-0" target="_blank">
+                        <i class="fas fa-print fa-xs"></i> Print
+                      </a>
+                      <a href="<%= '/edit/'+data.id %>" class="btn btn-success btn-sm py-0">
+                        <i class="fas fa-edit fa-xs"></i> Edit
+                      </a>
+                      <a href="javascript:void(0)" onclick="return confirm('Data akan dihapus!')? deleteData('<%=data.id%>') :'';" class="btn btn-danger btn-sm py-0">
+                        <i class="fas fa-trash fa-xs"></i> Hapus
+                      </a>
+                      <a href="<%= '/info/'+data.id %>" class="btn btn-info btn-sm py-0">
+                        <i class="fas fa-info fa-xs"></i> Info
+                      </a>
+                    </td>
+                  </tr>
+                  <% }); %>
+                  <% }else{%>
+                   <tr>
+                    <td>Data Not found</td>
+                   </tr>
+                  <% }%>
+                    
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- JQuery -->
+    <script src="../js/jquery-3.7.0.js"></script>
+    <!-- Bootstrap core JS-->
+    <script src="../bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- DataTables -->
+    <script src="../DataTables/DataTables-1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="../DataTables/DataTables-1.12.1/js/dataTables.bootstrap4.min.js"></script>
+
+    <script>
+      new DataTable("#example", {
+        "ordering" : false
+      });
+
+      function deleteData(id){
+        return window.location.href = "/delete/"+id;
+      }
+    </script>
+  </body>
+</html>

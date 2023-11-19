@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Cetak Kartu Garansi</title>
+    <!-- Bootstrap core CSS -->
+    <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Font Awesome icons (free version)-->
+    <script src="../fontawesome/js/all.js" crossorigin="anonymous"></script>
+    <!-- DataTables -->
+    <link
+      href="../DataTables/DataTables-1.12.1/css/dataTables.bootstrap4.min.css"
+      rel="stylesheet"
+    />
+
+    <style>
+      .table.table-ellipsis tbody td {
+        max-width: 100px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-size: 12px;
+      }
+      .table.table-ellipsis tbody td button,
+      .table.table-ellipsis tbody td a {
+        font-size: 12px;
+      }
+    </style>
+  </head>
+  <body style="background-color: #f4f6f9">
+    <div class="container">
+      <div class="row mt-3">
+        <div class="col-md-4 offset-md-4">
+          <div class="card">
+            <div class="card-header">
+                <h3 class="d-flex justify-content-between">
+                    <a href="/"><i class="fas fa-arrow-left fa-xs"> </i></a>
+                    Edit Garansi
+                  </h3>
+            </div>
+            <div class="card-body">
+              <form action="/update/<%=data.id %>" method="post">
+                <div class="form-group mb-3">
+                  <label for="">Nama</label>
+                  <input
+                    type="text"
+                    name="nama"
+                    id="nama"
+                    class="form-control"
+                    placeholder="Nama"
+                    value="<%=data.nama%>"
+                    required
+                    autofocus
+                  />
+                </div>
+                <div class="form-group mb-3">
+                  <label for="">Frame</label>
+                  <input
+                    type="text"
+                    name="frame"
+                    id="frame"
+                    class="form-control"
+                    placeholder="Frame"
+                    value="<%=data.frame%>"
+                    required
+                  />
+                </div>
+                <div class="form-group mb-3">
+                  <label for="">Lensa</label>
+                  <input
+                    type="text"
+                    name="lensa"
+                    id="lensa"
+                    class="form-control"
+                    placeholder="Lensa"
+                    value="<%=data.lensa%>"
+                    required
+                  />
+                </div>
+                <% let r = data.r.split("/") %>
+                <div class="form-inline row">
+                  <label for="" class="col-1"><b>R</b></label>
+                  <div class="form-group col p-0">
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="rsph"
+                      id="rsph"
+                      placeholder="Sph"
+                      value="<%= r[0] %>"
+                    />
+                  </div>
+                  <div class="form-group col p-0">
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="rcyl"
+                      id="rcyl"
+                      placeholder="Cyl"
+                      value="<%= r[1] %>"
+                    />
+                  </div>
+                  <div class="form-group col p-0">
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="raxis"
+                      id="raxis"
+                      placeholder="Axis"
+                      value="<%= r[2] %>"
+                    />
+                  </div>
+                  <div class="form-group col p-0">
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="radd"
+                      id="radd"
+                      placeholder="Add"
+                      value="<%= r[3] %>"
+                    />
+                  </div>
+                  <div class="form-group col p-0">
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="rmpd"
+                      id="rmpd"
+                      placeholder="Mpd"
+                      value="<%= r[4] %>"
+                    />
+                  </div>
+                </div>
+                <% let l = data.l.split("/") %>
+                <div class="form-inline row mb-3">
+                  <label for="" class="col-1"><b>L</b></label>
+                  <div class="form-group col p-0">
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="lsph"
+                      id="lsph"
+                      placeholder="Sph"
+                      value="<%= l[0] %>"
+                    />
+                  </div>
+                  <div class="form-group col p-0">
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="lcyl"
+                      id="lcyl"
+                      placeholder="Cyl"
+                      value="<%= l[1] %>"
+                    />
+                  </div>
+                  <div class="form-group col p-0">
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="laxis"
+                      id="laxis"
+                      placeholder="Axis"
+                      value="<%= l[2] %>"
+                    />
+                  </div>
+                  <div class="form-group col p-0">
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="ladd"
+                      id="ladd"
+                      placeholder="Add"
+                      value="<%= l[3] %>"
+                    />
+                  </div>
+                  <div class="form-group col p-0">
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="lmpd"
+                      id="lmpd"
+                      placeholder="Mpd"
+                      value="<%= l[4] %>"                      
+                    />
+                  </div>
+                </div>
+
+                <div class="form-group mb-3">
+                  <label for="">Garansi Lensa</label>
+                  <select
+                    class="form-control"
+                    name="garansi_lensa"
+                    id="garansi_lensa"
+                    required
+                  >
+                    <option value="-" <%=data.garansi_lensa==='-' ? 'selected' : '' %>>-- Tanpa Garansi --</option>
+                    <option value="6 Bulan" <%=data.garansi_lensa==='6 bulan' ? 'selected' : '' %>>6 Bulan</option>
+                    <option value="1 Tahun" <%=data.garansi_lensa==='1 Tahun' ? 'selected' : '' %>>1 Tahun</option>
+                    <option value="2 Tahun" <%=data.garansi_lensa==='2 Tahun' ? 'selected' : '' %>>2 Tahun</option>
+                    <option value="3 Tahun" <%=data.garansi_lensa==='3 Tahun' ? 'selected' : '' %>>3 Tahun</option>
+                  </select>
+                </div>
+
+                <div class="form-group mb-3">
+                  <label for="">Garansi Frame</label>
+                  <select
+                    class="form-control"
+                    name="garansi_frame"
+                    id="garansi_frame"
+                    required
+                  >
+                    <option value="-" <%=data.garansi_frame==='-' ? 'selected' : '' %>>-- Tanpa Garansi --</option>
+                    <option value="6 Bulan" <%=data.garansi_frame==='6 bulan' ? 'selected' : '' %>>6 Bulan</option>
+                    <option value="1 Tahun" <%=data.garansi_frame==='1 Tahun' ? 'selected' : '' %>>1 Tahun</option>
+                    <option value="2 Tahun" <%=data.garansi_frame==='2 Tahun' ? 'selected' : '' %>>2 Tahun</option>
+                    <option value="3 Tahun" <%=data.garansi_frame==='3 Tahun' ? 'selected' : '' %>>3 Tahun</option>
+                  </select>
+                </div>
+
+                <button class="btn btn-primary w-100">Simpan</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- JQuery -->
+    <script src="../js/jquery-3.7.0.js"></script>
+    <!-- Bootstrap core JS-->
+    <script src="../bootstrap/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
