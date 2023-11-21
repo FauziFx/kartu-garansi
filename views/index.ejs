@@ -245,6 +245,10 @@
                 <tbody>
                   <% if(datas !== ""){ %>
 
+                    <% if(status === "offline"){ %>
+                      <% datas.sort((a, b) => parseInt(b.id) - parseInt(a.id)) %>
+                    <% } %>
+
                   <% datas.forEach(function(data) { %>
                   <tr>
                     <td width="10%">
