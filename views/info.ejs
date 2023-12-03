@@ -55,12 +55,18 @@
                 <tr>
                   <td>Garansi Lensa</td>
                   <td>:</td>
-                  <td><%= data.garansi_lensa %></td>
+                  <td>
+                    <%= data.garansi_lensa %> <%=data.garansi_lensa === "6" ?
+                    "Bulan" : data.garansi_lensa === "-" ? "" : " Tahun"%>
+                  </td>
                 </tr>
                 <tr>
                   <td>Garansi Frame</td>
                   <td>:</td>
-                  <td><%= data.garansi_frame %></td>
+                  <td>
+                    <%= data.garansi_frame %> <%=data.garansi_frame === "6" ?
+                    "Bulan" : data.garansi_frame === "-" ? "" : " Tahun"%>
+                  </td>
                 </tr>
               </table>
               <table width="90%" class="table table-hover">

@@ -96,13 +96,19 @@
           </tr>
           <tr>
             <th width="30%">Frame</th>
-            <td>: <%=data.garansi_frame%></td>
+            <td>
+              : <%=data.garansi_frame%> <%=data.garansi_frame === "6" ? " Bulan"
+              : data.garansi_frame === "-" ? "" : " Tahun"%>
+            </td>
             <td rowspan="2" width="40%"><svg id="barcode"></svg></td>
             <td></td>
           </tr>
           <tr>
             <th width="30%">Lensa</th>
-            <td>: <%=data.garansi_lensa%></td>
+            <td>
+              : <%=data.garansi_lensa%> <%=data.garansi_lensa === "6" ? " Bulan"
+              : data.garansi_lensa === "-" ? "" : " Tahun"%>
+            </td>
           </tr>
         </table>
       </div>
