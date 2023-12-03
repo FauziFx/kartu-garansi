@@ -23,6 +23,23 @@ export const storeData = async (req, res) => {
 
   const r = [rsph, rcyl, raxis, radd, rmpd].join("/");
   const l = [lsph, lcyl, laxis, ladd, lmpd].join("/");
+  const dateNow = await getCurrentDate();
+  const expiredLensa =
+    garansi_lensa === "-"
+      ? dateNow
+      : garansi_lensa === "6"
+      ? moment.utc(dateNow).add("6", "M").format()
+      : moment.utc(dateNow).add(garansi_lensa, "y").format();
+
+  const expiredFrame =
+    garansi_frame === "-"
+      ? dateNow
+      : garansi_frame === "6"
+      ? moment.utc(dateNow).add("6", "M").format()
+      : moment.utc(dateNow).add(garansi_frame, "y").format();
+
+  const claimedLensa = garansi_lensa === "-" ? "0" : "1";
+  const claimedFrame = garansi_frame === "-" ? "0" : "1";
   try {
     const response = await axios.post("http://localhost:4000/api/garansi", {
       nama: nama,
@@ -32,6 +49,11 @@ export const storeData = async (req, res) => {
       l: l,
       garansi_lensa: garansi_lensa,
       garansi_frame: garansi_frame,
+      expired_lensa: expiredLensa,
+      expired_frame: expiredFrame,
+      claimed_lensa: claimedLensa,
+      claimed_frame: claimedFrame,
+      tanggal: dateNow,
     });
 
     res.redirect("/");
@@ -51,6 +73,10 @@ export const storeData = async (req, res) => {
           l: l,
           garansi_lensa: garansi_lensa,
           garansi_frame: garansi_frame,
+          expired_lensa: expiredLensa,
+          expired_frame: expiredFrame,
+          claimed_lensa: claimedLensa,
+          claimed_frame: claimedFrame,
           tanggal: await getCurrentDate(),
         };
         list.push(data);
@@ -67,6 +93,10 @@ export const storeData = async (req, res) => {
             l: l,
             garansi_lensa: garansi_lensa,
             garansi_frame: garansi_frame,
+            expired_lensa: expiredLensa,
+            expired_frame: expiredFrame,
+            claimed_lensa: claimedLensa,
+            claimed_frame: claimedFrame,
             tanggal: await getCurrentDate(),
           },
         ];
