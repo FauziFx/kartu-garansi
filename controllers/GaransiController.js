@@ -2,6 +2,8 @@ import axios from "axios";
 import moment from "moment";
 import fs from "fs";
 
+const URL = "http://localhost:4000/";
+
 export const storeData = async (req, res) => {
   const {
     nama,
@@ -19,6 +21,7 @@ export const storeData = async (req, res) => {
     lmpd,
     garansi_lensa,
     garansi_frame,
+    optik_id,
   } = req.body;
 
   const r = [rsph, rcyl, raxis, radd, rmpd].join("/");
@@ -41,7 +44,7 @@ export const storeData = async (req, res) => {
   const claimedLensa = garansi_lensa === "-" ? "0" : "1";
   const claimedFrame = garansi_frame === "-" ? "0" : "1";
   try {
-    const response = await axios.post("http://localhost:4000/api/garansi", {
+    const response = await axios.post(URL + "api/garansi", {
       nama: nama,
       frame: frame,
       lensa: lensa,
@@ -54,6 +57,7 @@ export const storeData = async (req, res) => {
       claimed_lensa: claimedLensa,
       claimed_frame: claimedFrame,
       tanggal: dateNow,
+      optik_id: optik_id,
     });
 
     res.redirect("/");
@@ -119,21 +123,22 @@ export const Home = async (req, res) => {
       const newList = JSON.stringify(list);
 
       try {
-        const response = await axios.post(
-          "http://localhost:4000/api/garansi/bulk",
-          { newList }
-        );
+        const response = await axios.post(URL + "api/garansi/bulk", {
+          newList,
+        });
 
         fs.writeFileSync("./data.json", "");
       } catch (error) {
         throw error;
       }
     }
-    const response = await axios.get("http://localhost:4000/api/garansi");
+    const response = await axios.get(URL + "api/garansi");
+    const responseOptik = await axios.get(URL + "api/optik");
 
     res.render("index", {
       moment: moment,
       datas: response.data.data,
+      dataOptik: responseOptik.data.data,
       status: "online",
     });
   } catch (error) {
@@ -177,14 +182,17 @@ export const InfoPage = async (req, res) => {
 export const EditPage = async (req, res) => {
   const { id } = req.params;
   const data = await getDataById(id);
+  const responseOptik = await axios.get(URL + "api/optik");
   res.render("edit", {
     data: data,
+    optik_id: data.optik_id,
+    dataOptik: responseOptik.data.data,
   });
 };
 
 const getDataById = async (id) => {
   try {
-    const response = await axios.get("http://localhost:4000/api/garansi/" + id);
+    const response = await axios.get(URL + "api/garansi/" + id);
     return response.data;
   } catch (error) {
     let list = JSON.parse(fs.readFileSync("./data.json", "utf-8"));
@@ -240,13 +248,14 @@ export const UpdateData = async (req, res) => {
     lmpd,
     garansi_lensa,
     garansi_frame,
+    optik_id,
   } = req.body;
 
   const r = [rsph, rcyl, raxis, radd, rmpd].join("/");
   const l = [lsph, lcyl, laxis, ladd, lmpd].join("/");
 
   try {
-    const response = await axios.put("http://localhost:4000/api/garansi", {
+    const response = await axios.put(URL + "api/garansi", {
       id: id,
       nama: nama,
       frame: frame,
@@ -255,6 +264,7 @@ export const UpdateData = async (req, res) => {
       l: l,
       garansi_lensa: garansi_lensa,
       garansi_frame: garansi_frame,
+      optik_id: optik_id,
     });
 
     if (response.data.success === true) {
@@ -288,9 +298,7 @@ export const DeleteData = async (req, res) => {
   const { id } = req.params;
 
   try {
-    const response = await axios.delete(
-      "http://localhost:4000/api/garansi/" + id
-    );
+    const response = await axios.delete(URL + "api/garansi/" + id);
 
     if (response.data.success === true) {
       res.redirect("/");

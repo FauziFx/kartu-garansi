@@ -47,6 +47,15 @@
             <div class="card-body">
               <form action="/update/<%=data.id %>" method="post">
                 <div class="form-group mb-3">
+                  <label for="">Optik/Armada</label>
+                  <select name="optik_id" id="" class="form-control">
+                    <option value="">--- Optik/Armada ---</option>
+                    <% dataOptik.forEach(function(data) { %>
+                      <option value="<%=data.id%>" <%=optik_id===data.id ? 'selected' : '' %>><%=data.nama_optik%></option>
+                    <% }) %>
+                  </select>
+                </div>
+                <div class="form-group mb-3">
                   <label for="">Nama</label>
                   <input
                     type="text"
