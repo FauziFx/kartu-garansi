@@ -63,51 +63,7 @@ export const storeData = async (req, res) => {
     res.redirect("/");
   } catch (error) {
     // Offline
-    if (error.code === "ECONNREFUSED") {
-      try {
-        let list = JSON.parse(fs.readFileSync("./data.json", "utf-8"));
-        let id;
-        list.length != 0 ? list.findLast((item) => (id = item.id)) : (id = 0);
-        const data = {
-          id: id + 1,
-          nama: nama,
-          frame: frame,
-          lensa: lensa,
-          r: r,
-          l: l,
-          garansi_lensa: garansi_lensa,
-          garansi_frame: garansi_frame,
-          expired_lensa: expiredLensa,
-          expired_frame: expiredFrame,
-          claimed_lensa: claimedLensa,
-          claimed_frame: claimedFrame,
-          tanggal: await getCurrentDate(),
-        };
-        list.push(data);
-        fs.writeFileSync("./data.json", JSON.stringify(list));
-        res.redirect("/");
-      } catch (error) {
-        const data = [
-          {
-            id: 1,
-            nama: nama,
-            frame: frame,
-            lensa: lensa,
-            r: r,
-            l: l,
-            garansi_lensa: garansi_lensa,
-            garansi_frame: garansi_frame,
-            expired_lensa: expiredLensa,
-            expired_frame: expiredFrame,
-            claimed_lensa: claimedLensa,
-            claimed_frame: claimedFrame,
-            tanggal: await getCurrentDate(),
-          },
-        ];
-        fs.writeFileSync("./data.json", JSON.stringify(data));
-        res.redirect("/");
-      }
-    }
+    throw error;
   }
 };
 
@@ -142,22 +98,7 @@ export const Home = async (req, res) => {
       status: "online",
     });
   } catch (error) {
-    if (error.code === "ECONNREFUSED") {
-      if (fs.readFileSync("./data.json", "utf-8").length === 0) {
-        res.render("index", {
-          moment: moment,
-          datas: "",
-          status: "offline",
-        });
-      } else {
-        const data = JSON.parse(fs.readFileSync("./data.json", "utf-8"));
-        res.render("index", {
-          moment: moment,
-          datas: data,
-          status: "offline",
-        });
-      }
-    }
+    throw error;
   }
 };
 
@@ -195,9 +136,7 @@ const getDataById = async (id) => {
     const response = await axios.get(URL + "api/garansi/" + id);
     return response.data;
   } catch (error) {
-    let list = JSON.parse(fs.readFileSync("./data.json", "utf-8"));
-
-    return list.filter((data) => data.id === parseInt(id))[0];
+    throw error;
   }
 };
 
@@ -271,26 +210,7 @@ export const UpdateData = async (req, res) => {
       res.redirect("/");
     }
   } catch (error) {
-    if (error.code === "ECONNREFUSED") {
-      let list = JSON.parse(fs.readFileSync("./data.json", "utf-8"));
-      let newList = list.filter((item) => item.id !== parseInt(id));
-      let listEdit = list.filter((item) => item.id === parseInt(id));
-      const data = {
-        id: listEdit[0].id,
-        nama: nama,
-        frame: frame,
-        lensa: lensa,
-        r: r,
-        l: l,
-        garansi_lensa: garansi_lensa,
-        garansi_frame: garansi_frame,
-        tanggal: listEdit[0].tanggal,
-      };
-
-      newList.push(data);
-      fs.writeFileSync("./data.json", JSON.stringify(newList));
-      res.redirect("/");
-    }
+    throw error;
   }
 };
 
@@ -304,12 +224,6 @@ export const DeleteData = async (req, res) => {
       res.redirect("/");
     }
   } catch (error) {
-    // throw error.message;
-    let list = JSON.parse(fs.readFileSync("./data.json", "utf-8"));
-
-    let newList = list.filter((item) => item.id != parseInt(id));
-
-    fs.writeFileSync("./data.json", JSON.stringify(newList));
-    res.redirect("/");
+    throw error.message;
   }
 };
